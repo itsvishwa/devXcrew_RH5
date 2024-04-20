@@ -1,10 +1,10 @@
-const user = require('../models/user.model');
+const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { secret, options } = require('../config/jwt');
 
 exports.signup = async ({ nic, name, role, bod, password }) => {
-    const existingUser = await user.findOne({ nic });
+    const existingUser = await User.findOne({ nic });
     if (existingUser) {
         throw new Error("NIC is already registered");
     }
@@ -14,7 +14,7 @@ exports.signup = async ({ nic, name, role, bod, password }) => {
     // Hash the password with the salt
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new user({
+    const newUser = new User({
         nic: nic,
         name: name,
         role: role,
@@ -24,10 +24,11 @@ exports.signup = async ({ nic, name, role, bod, password }) => {
     await newUser.save();
 };
 
-exports.signin = async ({ email, password }) => {
-    const user = await user.findOne({ email });
-    if (!user || !await user.comparePassword(password)) {
-        throw new Error("Invalid email or password");
+exports.signin = async ({ nic, password }) => {
+    const user = await User.findOne({ nic });
+
+    if (!user || !(bcrypt.compareSync(password, user.password))) {
+        throw new Error("Invalid nice or password");
     }
-    return jwt.sign({ userId: user._id }, secret, options);
+    return jwt.sign({ id: user._id, role: user.role }, secret, options);
 };
