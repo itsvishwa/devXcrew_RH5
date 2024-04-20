@@ -1,6 +1,6 @@
 const diagnoseService = require('../services/diagnose.services');
 
-async function createDiagnose(req, res) {
+const createDiagnose = async (req, res) => {
   try {
     const diagnoseData = req.body;
     diagnoseData.patient = req.params.patient;
@@ -11,6 +11,20 @@ async function createDiagnose(req, res) {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+}
+
+const getHistory = async (req, res) => {
+
+  try{
+    const history = await diagnoseService.getHistory(req.param);
+    res.status(200).json(history);
+  }catch(error){
+    res.status(500).json({ error: error.message });
+  }
+
+
+
+
 }
 
 module.exports = {
