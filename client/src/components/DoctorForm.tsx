@@ -6,9 +6,17 @@ interface Prop {
   isVerified: boolean;
   name: String;
   age: String;
+  patientVerifyBtnHandler: (nic: string) => void;
 }
 
-function DoctorForm({ isLoading, isInvalid, isVerified, name, age }: Prop) {
+function DoctorForm({
+  isLoading,
+  isInvalid,
+  isVerified,
+  name,
+  age,
+  patientVerifyBtnHandler,
+}: Prop) {
   const [patientNIC, setPatientNIC] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [diagnosis, setDiagnosis] = useState("");
@@ -35,7 +43,12 @@ function DoctorForm({ isLoading, isInvalid, isVerified, name, age }: Prop) {
             value={patientNIC}
             onChange={(event) => setPatientNIC(event.target.value)}
           />
-          <button className="btn btn-sm btn-circle btn-outline">
+          <button
+            onClick={() => {
+              patientVerifyBtnHandler(patientNIC);
+            }}
+            className="btn btn-sm btn-circle btn-outline"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

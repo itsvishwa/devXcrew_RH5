@@ -2,7 +2,7 @@ import logo from "./../assets/_70889b13-c86b-466d-8c60-097428127f27.jpeg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import apiClient from "../APIClient/BaseUrl";
+import apiClient from "../services/api_client";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
