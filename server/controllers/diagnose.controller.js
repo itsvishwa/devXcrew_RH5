@@ -15,8 +15,8 @@ const createDiagnose = async (req, res) => {
 
 const getHistory = async (req, res) => {
   try{
-    console.log(req.body);
-    const history = await diagnoseService.getHistory(req.body);
+    console.log(req.query);
+    const history = await diagnoseService.getHistory(req.query);
     res.status(200).json(history);
   }catch(error){
     res.status(500).json({ error: error.message });
