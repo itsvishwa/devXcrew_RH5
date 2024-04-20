@@ -15,7 +15,11 @@ function GetPatientHistory() {
         _setIsLoading(true);
         setIsLoading(true);
         apiClient
-            .get("/user/history/?nic=" + nic)
+            .get("/user/history/?nic=" + nic, {
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                }
+                })
             .then((res) => {
                 setName(res.data.name);
                 setAge(res.data.age);
@@ -34,7 +38,7 @@ function GetPatientHistory() {
 
     return (
         <>
-            <p className="mx-16 mt-8 text-xl font-medium">Add Patient Data</p>
+            <p className="mx-16 mt-8 text-xl font-medium">Get Patient History</p>
             <div className="mx-16 mt-4">
                 <PatientDiagnosisTable
                     isLoading={isLoading}

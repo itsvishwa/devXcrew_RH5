@@ -6,9 +6,13 @@ import apiClient from "../services/api_client";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export const Login = () => {
+interface Prop {
+  setloginfunction: () => void;
+}
+
+export const Login = ({setloginfunction}: Prop) => {
   const schema = yup.object().shape({
-    nic: yup.string().min(12,"Enter a valid NIC").max(12,"Enter a valid NIC").required("Enter a valid NIC"),
+    nic: yup.string().min(12, "Enter a valid NIC").max(12, "Enter a valid NIC").required("Enter a valid NIC"),
     password: yup.string().min(4).max(20).required("Enter the password"),
   });
 
@@ -20,9 +24,9 @@ export const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any, props: Prop) => {
     try {
-      console.log(data);
+      console.log(props);
       const response = await apiClient.post("/auth/signin", {
         nic: data.nic,
         password: data.password,
@@ -30,7 +34,8 @@ export const Login = () => {
       console.log(response);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        return <Link to={"/"}></Link>;
+        setloginfunction();
+        window.location.href = "/";
       } else {
         console.log(response.data);
       }
@@ -71,7 +76,7 @@ export const Login = () => {
             </div>
           </div>
           <div className="mb-3 text-2xl font-semibold">Please sign in</div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit((data) => onSubmit(data, setloginfunction))}>
             <div className="mb-2 d-form-control">
               <label className="flex items-center gap-2 input input-bordered">
                 <svg
