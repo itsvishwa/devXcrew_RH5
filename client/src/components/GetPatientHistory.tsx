@@ -15,9 +15,9 @@ function GetPatientHistory() {
         _setIsLoading(true);
         setIsLoading(true);
         apiClient
-            .post("/user/history/",{nic: nic},{
+            .get("/diagnose/viewHistory/?nic="+nic,{
                 headers: {
-                    Authorization: localStorage.getItem("token"),
+                    authorization: localStorage.getItem("token"),
                 },
             })
             .then((res) => {
