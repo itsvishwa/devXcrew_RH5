@@ -8,19 +8,15 @@ import { Navbar } from "./components/Navbar";
 import { useState } from "react";
 
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  const setloginfunction = () => {
-    setisLoggedIn(true);
-  };
   return (
     <div className="App">
       <Router>
-        <Navbar isLoggedIn />
+        <Navbar/>
         <Routes>
-          <Route path="/login" element={<Login setloginfunction={setloginfunction} />} />
+          <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/diagnose/add" element={<AddDiagnose />} />
-          <Route path="/PatientDiagnosisTable" element={<GetPatientHistory />} />
+          <Route path="/PatientHistory" element={<GetPatientHistory />} />
         </Routes>
       </Router>
     </div>

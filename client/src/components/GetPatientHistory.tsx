@@ -15,11 +15,11 @@ function GetPatientHistory() {
         _setIsLoading(true);
         setIsLoading(true);
         apiClient
-            .get("/user/history/?nic=" + nic, {
+            .post("/user/history/",{nic: nic},{
                 headers: {
                     Authorization: localStorage.getItem("token"),
-                }
-                })
+                },
+            })
             .then((res) => {
                 setName(res.data.name);
                 setAge(res.data.age);
