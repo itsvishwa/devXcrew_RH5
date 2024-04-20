@@ -15,10 +15,6 @@ export const SignUp = () => {
       .required("Enter the Role")
       .matches(/(admin|doctor|patient)/, "Enter a valid role"),
     bod: yup.date().required("Enter the Date of Birth"),
-    email: yup
-      .string()
-      .email("Enter a valid email")
-      .required("Enter a valid email"),
     password: yup.string().min(4).max(20).required("Enter the password"),
   });
 
@@ -55,7 +51,7 @@ export const SignUp = () => {
     <div className="h-80">
       <body className="grid min-h-screen place-content-center">
         <button
-          className="d-btn d-btn-square d-btn-ghost absolute right-2 top-2"
+          className="absolute d-btn d-btn-square d-btn-ghost right-2 top-2"
           data-toggle-theme="dark"
           data-act-className="ACTIVEclassName"
         >
@@ -70,7 +66,7 @@ export const SignUp = () => {
           </svg>
         </button>
 
-        <main className="w-72 text-center">
+        <main className="text-center w-72">
           <div className="avatar">
             <div className="w-24 rounded-full">
               <img
@@ -85,17 +81,17 @@ export const SignUp = () => {
           </div>
           <div className="mb-3 text-2xl font-semibold">Please sign in</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="d-form-control mb-2">
-              <label className="d-label" htmlFor="email-input">
-                <span className="d-label-text">NIC</span>
+            <div className="mb-2 d-form-control">
+              <label className="flex items-center gap-2 input input-bordered">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                <input
+                  id="email-input"
+                  type="text"
+                  placeholder="Please enter NIC"
+                  className="d-input d-input-bordered"
+                  {...register("nic")}
+                />
               </label>
-              <input
-                id="email-input"
-                type="text"
-                placeholder="nic"
-                className="d-input d-input-bordered"
-                {...register("nic")}
-              />
               {errors.nic && (
                 <p
                   className="text-red-500"
@@ -105,17 +101,17 @@ export const SignUp = () => {
                 </p>
               )}
             </div>
-            <div className="d-form-control mb-2">
-              <label className="d-label" htmlFor="email-input">
-                <span className="d-label-text">Name</span>
+            <div className="mb-2 d-form-control">
+              <label className="flex items-center gap-2 input input-bordered">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                <input
+                  id="email-input"
+                  type="text"
+                  placeholder="Enter the Name"
+                  className="d-input d-input-bordered"
+                  {...register("name")}
+                />
               </label>
-              <input
-                id="email-input"
-                type="text"
-                placeholder="Enter the Name"
-                className="d-input d-input-bordered"
-                {...register("name")}
-              />
               {errors.name && (
                 <p
                   className="text-red-500"
@@ -125,16 +121,13 @@ export const SignUp = () => {
                 </p>
               )}
             </div>
-            <div className="d-form-control mb-2">
-              <label className="d-label" htmlFor="email-input">
-                <span className="d-label-text">Role</span>
-              </label>
+            <div className="mb-2 d-form-control">
               <select
                 id="role-input"
-                className="d-input d-input-bordered"
+                className="w-full max-w-xs select select-bordered"
                 {...register("role")}
               >
-                <option value="">Select Role</option>
+                <option disabled selected>Select Role</option>
                 <option value="admin">Admin</option>
                 <option value="doctor">Doctor</option>
                 <option value="patient">Patient</option>
@@ -148,17 +141,17 @@ export const SignUp = () => {
                 </p>
               )}
             </div>
-            <div className="d-form-control mb-2">
-              <label className="d-label" htmlFor="email-input">
-                <span className="d-label-text">Date of Birth</span>
+            <div className="mb-2 d-form-control">
+              <label className="flex gap-2 spams-center spa input input-bordered">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                <input
+                  id="email-input"
+                  type="date"
+                  placeholder="bod"
+                  className="d-input d-input-bordered"
+                  {...register("bod")}
+                />
               </label>
-              <input
-                id="email-input"
-                type="date"
-                placeholder="bod"
-                className="d-input d-input-bordered"
-                {...register("bod")}
-              />
               {errors.bod && (
                 <p
                   className="text-red-500"
@@ -168,37 +161,17 @@ export const SignUp = () => {
                 </p>
               )}
             </div>
-            <div className="d-form-control mb-2">
-              <label className="d-label" htmlFor="email-input">
-                <span className="d-label-text">Email</span>
+            <div className="mb-2 d-form-control">
+              <label className="flex items-center gap-2 input input-bordered">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                <input
+                  id="password-input"
+                  type="text"
+                  placeholder="Password"
+                  className="d-input d-input-bordered"
+                  {...register("password")}
+                />
               </label>
-              <input
-                id="email-input"
-                type="text"
-                placeholder="Email"
-                className="d-input d-input-bordered"
-                {...register("email")}
-              />
-              {errors.email && (
-                <p
-                  className="text-red-500"
-                  style={{ color: "red", fontSize: "12px" }}
-                >
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-            <div className="d-form-control mb-2">
-              <label className="d-label" htmlFor="password-input">
-                <span className="d-label-text">Password</span>
-              </label>
-              <input
-                id="password-input"
-                type="text"
-                placeholder="Password"
-                className="d-input d-input-bordered"
-                {...register("password")}
-              />
               {errors.password && (
                 <p
                   className="text-red-500"
@@ -208,27 +181,14 @@ export const SignUp = () => {
                 </p>
               )}
             </div>
-            <div className="d-form-control mb-2">
-              <div className="d-label justify-start gap-3">
-                <input
-                  type="checkbox"
-                  className="d-toggle d-toggle-sm"
-                  id="rememberme"
-                />
-                <label htmlFor="rememberme" className="label-text text-sm">
-                  Remember me
-                </label>
-              </div>
-            </div>
             <div className="d-form-control">
-              <input
+              <button
                 type="submit"
-                value="Sign in"
-                className="d-btn d-btn-primary"
-              />
+                className="btn btn-active btn-neutral btn-wide"
+              >Sign UP</button>
             </div>
           </form>
-          <p className="text-base-content mt-5 text-opacity-50">
+          <p className="mt-5 text-opacity-50 text-base-content">
             &copy; 2017–2021
           </p>
         </main>
