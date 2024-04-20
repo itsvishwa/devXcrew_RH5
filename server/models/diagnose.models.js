@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const User = require('./user.model');
 
 const diagnoseSchema = new mongoose.Schema({
   patient: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: User,
     required: true
   },
   symptoms: {
@@ -28,7 +29,7 @@ const diagnoseSchema = new mongoose.Schema({
   },
   doctor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: User,
     required: true
   },
   input_date: {
