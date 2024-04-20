@@ -14,19 +14,16 @@ const createDiagnose = async (req, res) => {
 }
 
 const getHistory = async (req, res) => {
-
   try{
-    const history = await diagnoseService.getHistory(req.param);
+    console.log(req.body);
+    const history = await diagnoseService.getHistory(req.body);
     res.status(200).json(history);
   }catch(error){
     res.status(500).json({ error: error.message });
   }
-
-
-
-
 }
 
 module.exports = {
-  createDiagnose
+  createDiagnose,
+  getHistory
 };
