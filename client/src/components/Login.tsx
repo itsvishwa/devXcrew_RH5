@@ -8,10 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Login = () => {
   const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Enter a valid email")
-      .required("Enter a valid email"),
+    nic: yup.string().min(12,"Enter a valid NIC").max(12,"Enter a valid NIC").required("Enter a valid NIC"),
     password: yup.string().min(4).max(20).required("Enter the password"),
   });
 
@@ -26,8 +23,8 @@ export const Login = () => {
   const onSubmit = async (data: any) => {
     try {
       console.log(data);
-      const response = await apiClient.post("/auth/signup", {
-        email: data.email,
+      const response = await apiClient.post("/auth/signin", {
+        nic: data.nic,
         password: data.password,
       });
       console.log(response);
@@ -46,7 +43,7 @@ export const Login = () => {
     <div className="h-80">
       <body className="grid min-h-screen place-content-center">
         <button
-          className="d-btn d-btn-square d-btn-ghost absolute right-2 top-2"
+          className="absolute d-btn d-btn-square d-btn-ghost right-2 top-2"
           data-toggle-theme="dark"
           data-act-className="ACTIVEclassName"
         >
@@ -61,7 +58,7 @@ export const Login = () => {
           </svg>
         </button>
 
-        <main className="w-72 text-center">
+        <main className="text-center w-72">
           <div className="avatar">
             <div className="w-24 rounded-full">
               <img
@@ -75,8 +72,8 @@ export const Login = () => {
           </div>
           <div className="mb-3 text-2xl font-semibold">Please sign in</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="d-form-control mb-2">
-              <label className="input input-bordered flex items-center gap-2">
+            <div className="mb-2 d-form-control">
+              <label className="flex items-center gap-2 input input-bordered">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -86,23 +83,23 @@ export const Login = () => {
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                 </svg>
                 <input
-                  {...register("email")}
+                  {...register("nic")}
                   type="text"
                   className="grow"
                   placeholder="Username Here"
                 />
               </label>
-              {errors.email && (
+              {errors.nic && (
                 <p
                   className="text-red-500"
                   style={{ color: "red", fontSize: "12px" }}
                 >
-                  {errors.email.message}
+                  {errors.nic.message}
                 </p>
               )}
             </div>
-            <div className="d-form-control mb-2">
-              <label className="input input-bordered flex flex-row items-center gap-2">
+            <div className="mb-2 d-form-control">
+              <label className="flex flex-row items-center gap-2 input input-bordered">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -133,27 +130,14 @@ export const Login = () => {
                 )}
               </div>
             </div>
-            <div className="d-form-control mb-2">
-              <div className="d-label justify-start gap-3">
-                <input
-                  type="checkbox"
-                  className="d-toggle d-toggle-sm"
-                  id="rememberme"
-                />
-                <label htmlFor="rememberme" className="label-text text-sm">
-                  Remember me
-                </label>
-              </div>
-            </div>
             <div className="d-form-control">
-              <input
+              <button
                 type="submit"
-                value="Sign in"
-                className="d-btn d-btn-primary"
-              />
+                className="btn btn-active btn-neutral btn-wide"
+              >Sign in</button>
             </div>
           </form>
-          <p className="text-base-content mt-5 text-opacity-50">
+          <p className="mt-5 text-opacity-50 text-base-content">
             &copy; 2017–2021
           </p>
         </main>
