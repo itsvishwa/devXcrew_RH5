@@ -1,19 +1,20 @@
 const express = require('express');
-//const authRoutes = require('./routes/authRoutes');
 const mongoose = require('mongoose');
-const {MONGO_URI, PORT} = require('./config/config')
+const cors = require('cors');
+const { MONGO_URI, PORT } = require('./config/config');
 const app = express();
+
+const authRoutes = require('./routes/auth.routes');
 
 
 // Middleware
+app.use(
+    cors({
+        credentials: true,
+        origin: "http://localhost:3000",
+    })
+);
 app.use(express.json());
-
-// Routes
-// app.use('/api/auth', authRoutes);
-
-app.get('/helloworld', (req, res) =>{
-    res.send("hello world");
-})
 
 
 // Connect to MongoDB
@@ -22,4 +23,11 @@ mongoose.connect(MONGO_URI)
         console.log('Connected to MongoDB');
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
     })
-    .catch(err => console.error('Error connecting to MongoDB:', err));
+    .catch(err => {
+        console.error('Error connecting to MongoDB:', err);
+        process.exit(1); // Exiting the process if unable to connect to MongoDB
+    });
+
+
+// Routes
+app.use('/auth', authRoutes);
