@@ -7,6 +7,12 @@ interface Prop {
   name: String;
   age: String;
   patientVerifyBtnHandler: (nic: string) => void;
+  submitBtnHandler: (
+    symptoms: String,
+    diagnosis: String,
+    medications: String,
+    medicalTests: String
+  ) => void;
 }
 
 function DoctorForm({
@@ -16,12 +22,20 @@ function DoctorForm({
   name,
   age,
   patientVerifyBtnHandler,
+  submitBtnHandler,
 }: Prop) {
   const [patientNIC, setPatientNIC] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [diagnosis, setDiagnosis] = useState("");
   const [medications, setMedications] = useState("");
   const [medicalTests, setMedicalTests] = useState("");
+
+  const discardBtnHander = () => {
+    setSymptoms("");
+    setDiagnosis("");
+    setMedications("");
+    setMedicalTests("");
+  };
 
   return (
     <>
@@ -60,7 +74,7 @@ function DoctorForm({
           </button>
         </label>
         {isLoading && (
-          <div className="flex mt-2 justify-end ">
+          <div className="flex mt-2 justify-end">
             <span className="mr-2">Loading</span>
             <span className="loading loading-ring loading-md"></span>
           </div>
@@ -84,7 +98,7 @@ function DoctorForm({
         )}
         {isVerified && (
           <div>
-            <div className="flex mt-2 justify-end ">
+            <div className="flex mt-2 justify-end pt-2">
               <span className="mr-2 text-success">Verified</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +113,7 @@ function DoctorForm({
                 />
               </svg>
             </div>
-            <div className="avatar placeholder flex items-center bg-base-200 p-4 rounded-lg mt-4">
+            <div className="avatar placeholder flex items-center bg-base-200 p-4 rounded-lg mt-4 border border-green-700">
               <div className="bg-neutral text-neutral-content rounded-full w-12">
                 <span>V</span>
               </div>
@@ -148,8 +162,25 @@ function DoctorForm({
               }}
             ></textarea>
             <div className="flex flex-row justify-between">
-              <button className="btn btn-outline btn-error">Discard</button>
-              <button className="btn btn-outline btn-success">
+              <button
+                className="btn btn-outline btn-error"
+                onClick={() => {
+                  discardBtnHander();
+                }}
+              >
+                Discard
+              </button>
+              <button
+                className="btn btn-outline btn-success"
+                onClick={() => {
+                  submitBtnHandler(
+                    symptoms,
+                    diagnosis,
+                    medications,
+                    medicalTests
+                  );
+                }}
+              >
                 Submit Patient Data
               </button>
             </div>
