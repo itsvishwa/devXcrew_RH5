@@ -5,7 +5,7 @@ const { MONGO_URI, PORT } = require('./config/config');
 const app = express();
 
 const authRoutes = require('./routes/auth.routes');
-
+const userRoutes = require('./routes/user.routes');
 
 // Middleware
 app.use(
@@ -31,3 +31,4 @@ mongoose.connect(MONGO_URI)
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);

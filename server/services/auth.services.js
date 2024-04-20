@@ -30,5 +30,5 @@ exports.signin = async ({ nic, password }) => {
     if (!user || !(bcrypt.compareSync(password, user.password))) {
         throw new Error("Invalid nice or password");
     }
-    return jwt.sign({ userId: user._id }, secret, options);
+    return jwt.sign({ id: user._id, role: user.role }, secret, options);
 };
