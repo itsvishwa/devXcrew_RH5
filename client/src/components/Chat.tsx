@@ -1,17 +1,14 @@
 import { useState } from "react";
 import LeftChat from "./LeftChat";
 import RightChat from "./RightChat";
-import apiClient from "../services/api_client";
+import axios, { Axios } from "axios";
 
 interface Prop {
   name: String;
 }
 
 function Chat({ name }: Prop) {
-  const [dataArr, setDataArr] = useState<String[]>([
-    "Kohomada kama",
-    "Athi wishishtai Sir",
-  ]);
+  const [dataArr, setDataArr] = useState<String[]>([]);
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,16 +16,16 @@ function Chat({ name }: Prop) {
     setLoading(true);
     const origianlArr = [...dataArr];
     setDataArr([...dataArr, question]);
-    apiClient
-      .post("/chat", {
-        msg: question,
+    axios
+      .post("http://localhost:3000/chat/200124502620", {
+        message: question,
         headers: {
           authorization:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjQxNTA5MTYxY2VhOTc3OTM4YzQ5NyIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3MTM2NDE4MDAsImV4cCI6MTcxMzY0NTQwMH0.AApKWjbjiyphqGYP_iM2EVk4YmkyblJDU1x9hKD_65Q",
         },
       })
       .then((res) => {
-        setDataArr([...dataArr, res.data.answer]);
+        setDataArr([...dataArr, res.data.reply]);
         setLoading(false);
       })
       .catch((err) => {

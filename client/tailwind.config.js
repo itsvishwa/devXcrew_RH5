@@ -7,5 +7,9 @@ export default {
   daisyui: {
     themes: ["light", "dark", "cupcake"],
   },
-  plugins: [require("daisyui"), require("tailwind-scrollbar")],
+  plugins: [
+    require("daisyui"),
+    require("tailwind-scrollbar"),
+    require("@tailwindcss/typography"),
+  ],
 };
