@@ -37,3 +37,8 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/diagnose', diagnoseRoutes);
 app.use('/test', testRoutes);
+
+
+app.post('graph/:userid', (req, res) => {
+    
+})
