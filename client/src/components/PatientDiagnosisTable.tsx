@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Chat from "./Chat";
 import Chart from "./Chart"
+import axios from "axios"
 
 interface Prop {
   isLoading: boolean;
@@ -23,10 +24,35 @@ export const PatientDiagnosisTable = ({
 }: Prop) => {
   const [patientNIC, setPatientNIC] = useState("");
   const [activeFrom, setActiveForm] = useState("");
+  const [dataArr, setDataArr] = useState<String[]>([]);
+  const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleForm = (form: string) => {
     setActiveForm(form);
   }
+
+  const sendBtnHander = () => {
+    setLoading(true);
+    const origianlArr = [...dataArr];
+    setDataArr([...dataArr, question]);
+    axios
+      .post("http://localhost:3000/chat/200124502620", {
+        message: question,
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setDataArr([...dataArr, res.data.reply]);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setDataArr([...origianlArr]);
+        console.error(err);
+        setLoading(false);
+      });
+  };
 
 
   return (
@@ -115,40 +141,68 @@ export const PatientDiagnosisTable = ({
           </div>
         )}
         {isVerified && data ? (
-        <div className="mt-10">
-          <button onClick={() => {toggleForm("Form1");}} className="mr-10 btn btn-active btn-neutral">Table Data </button>
-          <button onClick={() => { toggleForm("Form2");}} className="mr-10 btn btn-active btn-neutral">Chat</button>
-          <button onClick={() => { toggleForm("Form3");}} className="btn btn-active btn-neutral">Chart</button>
-          <div className="divider"></div>
-          {activeFrom === "Form1" && (
-          <div className="overflow-x-auto">
-            <table className="table table-zebra">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Date</th>
-                  <th>Doctor</th>
-                  <th>Diagnosis</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((diagnose, key) => (
-                  <tr key={key}>
-                    <td>{key}</td>
-                    <td>{new Date(diagnose.input_date).toLocaleDateString()}</td>
-                    <td>{diagnose.doctor.name}</td>
-                    <td>{diagnose.diagnosis}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>)}
-          {activeFrom === "Form2" && (
-            <Chat name={"vishwa Sandaruwan"} />
-          )}
-          {activeFrom === "Form3" && (
-            <Chart/>
-          )}
+          <div className="mt-10">
+            <button onClick={() => { toggleForm("Form1"); }} className="mr-10 btn btn-active btn-neutral">Table Data</button>
+            <button onClick={() => { toggleForm("Form2"); }} className="mr-10 btn btn-active btn-neutral">Chat</button>
+            <button onClick={() => { toggleForm("Form3"); }} className="btn btn-active btn-neutral">Chart</button>
+            <div className="divider"></div>
+            {activeFrom === "Form1" && (
+              <div className="overflow-x-auto">
+                <table className="table table-zebra">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Date</th>
+                      <th>Doctor</th>
+                      <th>Diagnosis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((diagnose, key) => (
+                      <tr key={key}>
+                        <td>{key}</td>
+                        <td>{new Date(diagnose.input_date).toLocaleDateString()}</td>
+                        <td>{diagnose.doctor.name}</td>
+                        <td>{diagnose.diagnosis}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>)}
+            {activeFrom === "Form2" && (
+              <Chat name={"vishwa Sandaruwan"} />
+            )}
+            {activeFrom === "Form3" && (
+              <div>
+                <label className="input input-bordered flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={question}
+                    onChange={(event) => {
+                      setQuestion(event.target.value);
+                    }}
+                    className="grow"
+                    placeholder="Message HealthWatch360..."
+                  />
+                  <button
+                    onClick={() => {
+                      sendBtnHander();
+                    }}
+                    className="btn btn-sm btn-circle btn-outline"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                    </svg>
+                  </button>
+                </label>
+                <Chart />
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex justify-center mt-4">
