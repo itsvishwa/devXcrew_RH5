@@ -7,6 +7,7 @@ const app = express();
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const diagnoseRoutes = require('./routes/diagnose.routes');
+const testRoutes = require('./routes/test.routes');
 
 // Middleware
 app.use(
@@ -35,3 +36,4 @@ mongoose.connect(MONGO_URI)
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/diagnose', diagnoseRoutes);
+app.use('/test', testRoutes);
