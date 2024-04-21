@@ -17,40 +17,42 @@ function Chat({ name }: Prop) {
     const origianlArr = [...dataArr];
     setDataArr([...dataArr, question]);
     axios
-      .post("http://localhost:3000/chat/200124502620", {
-        message: question,
-        headers: {
-          authorization: localStorage.getItem("token"),
+      .post(
+        "http://localhost:3000/chat/200124502620",
+        {
+          message: question,
         },
-      })
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((res) => {
         setDataArr([...dataArr, res.data.reply]);
         setLoading(false);
       })
       .catch((err) => {
-        setDataArr([...origianlArr]);
+        // setDataArr([...origianlArr]);
         console.error(err);
-        setLoading(false);
       });
   };
 
   return (
     <div className="mx-80 mt-16 flex flex-col h-[85vh]">
       <div className="flex justify-center">
-        <span className="text-2xl font-medium">HealthWatch360.AI</span>
+        <span className="text-2xl font-medium">Chat with MediMind.AI</span>
       </div>
       <div className="flex-1 overflow-y-auto over scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 ">
         {dataArr.map((data, index) => (
           <div key={index} className="mb-4 px-8">
-            {index % 2 == 1 && <LeftChat name={name} msg={data} />}
-            {index % 2 == 0 && (
-              <RightChat name="HealthWatch360.AI" msg={data} />
-            )}
+            {index % 2 == 0 && <LeftChat name={name} msg={data} />}
+            {index % 2 == 1 && <RightChat name="MediMind.AI" msg={data} />}
           </div>
         ))}
         {loading && (
           <div className="flex flex-col items-end">
-            <RightChat name="HealthWatch360.AI" msg="Loading" />
+            <RightChat name="MediMind.AI" msg="Loading" />
             <span className="loading loading-bars loading-sm mr-10"></span>
           </div>
         )}
