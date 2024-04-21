@@ -16,10 +16,10 @@ export const Navbar = () => {
                     <li><Link to="/PatientHistory">Patient History</Link></li>
                     <li>
                         <details>
-                            <summary>Parent</summary>
+                            <summary>Patient</summary>
                             <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
+                                <li><Link to="/diagnose/add">New Patient Diagnosis</Link></li>
+                                <li><Link to="/PatientHistory">Patient History</Link></li>
                             </ul>
                         </details>
                     </li>
