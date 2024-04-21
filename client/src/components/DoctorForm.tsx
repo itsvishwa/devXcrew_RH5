@@ -8,6 +8,12 @@ interface Prop {
   name: String;
   age: String;
   patientVerifyBtnHandler: (nic: string) => void;
+  submitBtnHandler: (
+    symptoms: String,
+    diagnosis: String,
+    medications: String,
+    medicalTests: String
+  ) => void;
 }
 
 function DoctorForm({
@@ -17,6 +23,7 @@ function DoctorForm({
   name,
   age,
   patientVerifyBtnHandler,
+  submitBtnHandler,
 }: Prop) {
   const [patientNIC, setPatientNIC] = useState("");
   const [symptoms, setSymptoms] = useState("");
@@ -57,6 +64,13 @@ function DoctorForm({
         });
       // For example, you can create a FormData object and append the files to it
     }
+  };
+
+  const discardBtnHander = () => {
+    setSymptoms("");
+    setDiagnosis("");
+    setMedications("");
+    setMedicalTests("");
   };
 
   return (
