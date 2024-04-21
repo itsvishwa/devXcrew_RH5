@@ -6,7 +6,6 @@ import AddDiagnose from "./components/AddDiagnose";
 import Chat from "./components/Chat";
 import GetPatientHistory from "./components/GetPatientHistory";
 import { Navbar } from "./components/Navbar";
-import { useState } from "react";
 
 function App() {
   return (

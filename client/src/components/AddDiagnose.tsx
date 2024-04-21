@@ -52,7 +52,7 @@ function AddDiagnose() {
         {
           headers: {
             authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjQxNTA5MTYxY2VhOTc3OTM4YzQ5NyIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3MTM2NDE4MDAsImV4cCI6MTcxMzY0NTQwMH0.AApKWjbjiyphqGYP_iM2EVk4YmkyblJDU1x9hKD_65Q",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjQyYzM0NTM3NmVmZDFlZDU1NjEyYyIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3MTM2NjU2NzgsImV4cCI6MTcxMzY2OTI3OH0.Ateg_TQkQKuXkVN-5D8MyP7tYOSlkHtqo6wV37jzDYc",
           },
         }
       )
