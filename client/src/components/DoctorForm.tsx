@@ -1,4 +1,6 @@
 import { useState } from "react";
+import apiClient from "../services/api_client";
+import axios from "axios";
 
 interface Prop {
   isLoading: boolean;
@@ -30,6 +32,49 @@ function DoctorForm({
   const [medications, setMedications] = useState("");
   const [medicalTests, setMedicalTests] = useState("");
 
+  const [activeFrom, setActiveForm] = useState("");
+
+  const [files, setFiles] = useState<FileList | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = event.target.files;
+    setFiles(fileList);
+  };
+
+  const toggleForm = (form: string) => {
+    setActiveForm(form);
+  };
+
+  const handleSubmit = async () => {
+    if (files) {
+      // Perform the submission logic here, using the selected files
+      // You can access the files using the files variable
+      console.log(files);
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
+      // Perform the submission using the formData object
+      // You can use axios to send the data to the server
+      // For example:
+      const response = await apiClient.get("test/generate-upload-url/");
+
+      console.log(response.data.uploadUrl);
+      console.log(formData);
+      const fileupdateresponse = await axios.patch(
+        response.data.uploadUrl,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/octet-stream", // Set the content type to binary
+          },
+        }
+      );
+      console.log(fileupdateresponse.data);
+    }
+  };
+
   const discardBtnHander = () => {
     setSymptoms("");
     setDiagnosis("");
@@ -39,7 +84,7 @@ function DoctorForm({
 
   return (
     <>
-      <div className="p-8 rounded-md shadow-lg bg-base-300">
+      <div className="p-8 rounded-md shadow-lg ">
         {/* Patient ID  */}
         <label className="flex items-center gap-2 input input-bordered">
           <svg
@@ -123,67 +168,111 @@ function DoctorForm({
           </div>
         )}
         {isVerified && (
-          <div>
-            <div className="divider"></div>
-            <span>Add symptoms *</span>
-            <textarea
-              placeholder="Additional symptoms"
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-              onChange={(event) => {
-                setSymptoms(event.target.value);
-              }}
-              value={symptoms}
-            ></textarea>
-            <span>Enter medical diagnosis *</span>
-            <textarea
-              placeholder="Diagnosis"
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-              onChange={(event) => {
-                setDiagnosis(event.target.value);
-              }}
-              value={diagnosis}
-            ></textarea>
-            <span>Enter Medications *</span>
-            <textarea
-              placeholder="Medications"
-              value={medications}
-              onChange={(event) => {
-                setMedications(event.target.value);
-              }}
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-            ></textarea>
-            <span>Enter Medical Tests</span>
-            <textarea
-              placeholder="Medical tests"
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-              value={medicalTests}
-              onChange={(event) => {
-                setMedicalTests(event.target.value);
-              }}
-            ></textarea>
-            <div className="flex flex-row justify-between">
+          <div className="mt-4">
+            <div className="flex justify-center gap-6">
               <button
-                className="btn btn-outline btn-error"
                 onClick={() => {
-                  discardBtnHander();
+                  toggleForm("Form1");
                 }}
+                className="btn btn-outline btn-accent rounded-full"
               >
-                Discard
+                Input data
               </button>
               <button
-                className="btn btn-outline btn-success"
                 onClick={() => {
-                  submitBtnHandler(
-                    symptoms,
-                    diagnosis,
-                    medications,
-                    medicalTests
-                  );
+                  toggleForm("Form2");
                 }}
+                className="btn btn-outline btn-info rounded-full"
               >
-                Submit Patient Data
+                Input File
               </button>
             </div>
+            <div className="divider"></div>
+
+            {activeFrom === "Form1" && (
+              <>
+                <span>Add symptoms *</span>
+                <textarea
+                  placeholder="Additional symptoms"
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                  onChange={(event) => {
+                    setSymptoms(event.target.value);
+                  }}
+                  value={symptoms}
+                ></textarea>
+                <span>Enter medical diagnosis *</span>
+                <textarea
+                  placeholder="Diagnosis"
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                  onChange={(event) => {
+                    setDiagnosis(event.target.value);
+                  }}
+                  value={diagnosis}
+                ></textarea>
+                <span>Enter Medications *</span>
+                <textarea
+                  placeholder="Medications"
+                  value={medications}
+                  onChange={(event) => {
+                    setMedications(event.target.value);
+                  }}
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                ></textarea>
+                <span>Enter Medical Tests</span>
+                <textarea
+                  placeholder="Medical tests"
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                  value={medicalTests}
+                  onChange={(event) => {
+                    setMedicalTests(event.target.value);
+                  }}
+                ></textarea>
+                <div className="flex flex-row justify-between">
+                  <button
+                    onClick={() => {
+                      discardBtnHander();
+                    }}
+                    className="btn btn-outline btn-error"
+                  >
+                    Discard
+                  </button>
+                  <button
+                    className="btn btn-outline btn-success"
+                    onClick={() => {
+                      submitBtnHandler(
+                        symptoms,
+                        diagnosis,
+                        medications,
+                        medicalTests
+                      );
+                    }}
+                  >
+                    Submit Patient Data
+                  </button>
+                </div>
+              </>
+            )}
+            {activeFrom === "Form2" && (
+              <>
+                <div>
+                  {/* ... */}
+                  <input
+                    type="file"
+                    multiple
+                    onChange={handleFileChange}
+                    className="file-input file-input-bordered w-full max-w-xs"
+                  />
+                  <div className="flex flex-row justify-end">
+                    <button
+                      className="mt-10 btn btn-outline btn-success"
+                      onClick={handleSubmit}
+                    >
+                      Submit Patient Data
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

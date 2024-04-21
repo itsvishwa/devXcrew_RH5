@@ -8,7 +8,7 @@ interface Props {
 export const Navbar = ({ statusPage }: Props) => {
   return (
     <div className="navbar bg-base-100">
-      <div className="navbar-start ml-8">
+      <div className="navbar-start ml-14">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -22,7 +22,9 @@ export const Navbar = ({ statusPage }: Props) => {
           />
         </svg>
 
-        <a className="text-xl font-bold text-sky-500">MediMind</a>
+        <Link to="/" className="text-xl font-bold text-sky-500">
+          MediMind
+        </Link>
       </div>
       <div className="navbar-end mr-8">
         {statusPage === 0 && (

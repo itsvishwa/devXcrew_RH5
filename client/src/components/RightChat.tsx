@@ -15,7 +15,7 @@ function RightChat({ name, msg }: Props) {
             />
           </div>
         </div>
-        <div className="chat-header">{name}</div>
+        <div className="chat-header text-gray-400">{name}</div>
         <div className="chat-bubble">{msg}</div>
       </div>
     </>
