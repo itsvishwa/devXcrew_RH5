@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Chat from "./Chat";
+import Chart from "./Chart"
 
 interface Prop {
   isLoading: boolean;
@@ -20,6 +22,12 @@ export const PatientDiagnosisTable = ({
   patientVerifyBtnHandler,
 }: Prop) => {
   const [patientNIC, setPatientNIC] = useState("");
+  const [activeFrom, setActiveForm] = useState("");
+
+  const toggleForm = (form: string) => {
+    setActiveForm(form);
+  }
+
 
   return (
     <>
@@ -102,11 +110,17 @@ export const PatientDiagnosisTable = ({
                 <span>V</span>
               </div>
               <span className="ml-8">Name: {name || 'Lahiru'}</span>
-              <span className="ml-8">Age: {age|| '23'} years old</span>
+              <span className="ml-8">Age: {age || '23'} years old</span>
             </div>
           </div>
         )}
         {isVerified && data ? (
+        <div className="mt-10">
+          <button onClick={() => {toggleForm("Form1");}} className="mr-10 btn btn-active btn-neutral">Table Data </button>
+          <button onClick={() => { toggleForm("Form2");}} className="mr-10 btn btn-active btn-neutral">Chat</button>
+          <button onClick={() => { toggleForm("Form3");}} className="btn btn-active btn-neutral">Chart</button>
+          <div className="divider"></div>
+          {activeFrom === "Form1" && (
           <div className="overflow-x-auto">
             <table className="table table-zebra">
               <thead>
@@ -128,6 +142,13 @@ export const PatientDiagnosisTable = ({
                 ))}
               </tbody>
             </table>
+          </div>)}
+          {activeFrom === "Form2" && (
+            <Chat name={"vishwa Sandaruwan"} />
+          )}
+          {activeFrom === "Form3" && (
+            <Chart/>
+          )}
           </div>
         ) : (
           <div className="flex justify-center mt-4">
