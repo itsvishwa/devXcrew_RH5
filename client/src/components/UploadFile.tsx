@@ -5,6 +5,7 @@ import * as yup from "yup";
 import apiClient from "../services/api_client";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 interface Prop {
     isVerified: boolean;
@@ -34,7 +35,7 @@ export const UploadFile = ({
             // Perform the submission using the formData object
             // You can use axios to send the data to the server
             // For example:
-            axios.post("/api/submit", formData)
+            axios.post("test/generate-upload-url", formData)
                 .then((response) => {
                     // Handle the response
                 })

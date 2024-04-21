@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import apiClient from "../services/api_client";
 
 interface Prop {
   isLoading: boolean;
@@ -43,10 +44,11 @@ function DoctorForm({
     setActiveForm(form);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (files) {
       // Perform the submission logic here, using the selected files
       // You can access the files using the `files` variable
+      console.log(files);
       const formData = new FormData();
       for (let i = 0; i < files.length; i++) {
         formData.append("files", files[i]);
@@ -55,14 +57,17 @@ function DoctorForm({
       // Perform the submission using the formData object
       // You can use axios to send the data to the server
       // For example:
-      axios.post("/api/submit", formData)
-        .then((response) => {
-          // Handle the response
-        })
-        .catch((error) => {
-          // Handle the error
-        });
-      // For example, you can create a FormData object and append the files to it
+      const response = await apiClient.get("test/generate-upload-url/");
+
+      console.log(response.data.uploadUrl);
+      console.log(formData);
+      const fileupdateresponse = await axios.patch(response.data.uploadUrl, formData, {
+        headers: {
+          'Content-Type': 'application/octet-stream' // Set the content type to binary
+        }
+      });
+      console.log(fileupdateresponse.data);
+
     }
   };
 
@@ -229,10 +234,10 @@ function DoctorForm({
                   {/* ... */}
                   <input type="file" multiple onChange={handleFileChange} />
                   <div className="flex flex-row justify-between">
-                      <button className="mt-10 btn btn-outline btn-error">Discard</button>
-                      <button className="mt-10 btn btn-outline btn-success" onClick={handleSubmit}>
-                        Submit Patient Data
-                      </button>
+                    <button className="mt-10 btn btn-outline btn-error">Discard</button>
+                    <button className="mt-10 btn btn-outline btn-success" onClick={handleSubmit}>
+                      Submit Patient Data
+                    </button>
                   </div>
                 </div>
               </>
