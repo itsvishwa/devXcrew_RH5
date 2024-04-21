@@ -20,8 +20,7 @@ function Chat({ name }: Prop) {
       .post("http://localhost:3000/chat/200124502620", {
         message: question,
         headers: {
-          authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjQyYzM0NTM3NmVmZDFlZDU1NjEyYyIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3MTM2NjU2NzgsImV4cCI6MTcxMzY2OTI3OH0.Ateg_TQkQKuXkVN-5D8MyP7tYOSlkHtqo6wV37jzDYc",
+          authorization: localStorage.getItem("token"),
         },
       })
       .then((res) => {

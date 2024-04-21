@@ -1,14 +1,16 @@
-import logo from "./../assets/_70889b13-c86b-466d-8c60-097428127f27.jpeg";
+import logo from "./../assets/logo.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import apiClient from "../services/api_client";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 export const Login = () => {
   const schema = yup.object().shape({
-    nic: yup.string().min(12,"Enter a valid NIC").max(12,"Enter a valid NIC").required("Enter a valid NIC"),
+    nic: yup
+      .string()
+      .min(12, "Enter a valid NIC")
+      .max(12, "Enter a valid NIC")
+      .required("Enter a valid NIC"),
     password: yup.string().min(4).max(20).required("Enter the password"),
   });
 
@@ -40,37 +42,15 @@ export const Login = () => {
   };
 
   return (
-    <div className="h-80">
-      <body className="grid min-h-screen place-content-center">
-        <button
-          className="absolute d-btn d-btn-square d-btn-ghost right-2 top-2"
-          data-toggle-theme="dark"
-          data-act-className="ACTIVEclassName"
-        >
-          <svg
-            className="fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z" />
-          </svg>
-        </button>
-
-        <main className="text-center w-72">
+    <div className="">
+      <body className="mt-40 grid place-content-center">
+        <main className="text-center">
           <div className="avatar">
-            <div className="w-24 rounded-full">
-              <img
-                src={logo}
-                alt=""
-                width="120"
-                height="57"
-                className="mx-auto mb-4"
-              />
+            <div className="w-40 rounded-lg shadow-lg">
+              <img src={logo} alt="" className="mx-auto mb-4" />
             </div>
           </div>
-          <div className="mb-3 text-2xl font-semibold">Please sign in</div>
+          <div className="mt-8 mb-4 text-xl">Welcome, Login here</div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-2 d-form-control">
               <label className="flex items-center gap-2 input input-bordered">
@@ -91,7 +71,7 @@ export const Login = () => {
               </label>
               {errors.nic && (
                 <p
-                  className="text-red-500"
+                  className="text-red-300"
                   style={{ color: "red", fontSize: "12px" }}
                 >
                   {errors.nic.message}
@@ -134,11 +114,13 @@ export const Login = () => {
               <button
                 type="submit"
                 className="btn btn-active btn-neutral btn-wide"
-              >Sign in</button>
+              >
+                Log In
+              </button>
             </div>
           </form>
           <p className="mt-5 text-opacity-50 text-base-content">
-            &copy; 2017–2021
+            &copy; 2024 MediMind.AI
           </p>
         </main>
       </body>
