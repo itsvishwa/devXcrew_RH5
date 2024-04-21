@@ -17,12 +17,17 @@ function Chat({ name }: Prop) {
     const origianlArr = [...dataArr];
     setDataArr([...dataArr, question]);
     axios
-      .post("http://localhost:3000/chat/200124502620", {
-        message: question,
-        headers: {
-          authorization: localStorage.getItem("token"),
+      .post(
+        "http://localhost:3000/chat/200124502620",
+        {
+          message: question,
         },
-      })
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((res) => {
         setDataArr([...dataArr, res.data.reply]);
         setLoading(false);
