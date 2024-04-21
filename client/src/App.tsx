@@ -6,20 +6,24 @@ import AddDiagnose from "./components/AddDiagnose";
 import GetPatientHistory from "./components/GetPatientHistory";
 import { Navbar } from "./components/Navbar";
 import { useState } from "react";
+import { Provider } from "react-redux";
+// import { store } from "./store";
+// import { UploadFile } from "./components/UploadFile";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar/>
+        <Navbar />
         <Routes>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/diagnose/add" element={<AddDiagnose />} />
           <Route path="/PatientHistory" element={<GetPatientHistory />} />
+          {/* <Route path="/PatientReportUpload" element={<UploadFile />} /> */}
         </Routes>
-      </Router>
-    </div>
+    </Router>
+    </div >
   );
 }
 

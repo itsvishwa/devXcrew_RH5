@@ -5,8 +5,10 @@ import * as yup from "yup";
 import apiClient from "../services/api_client";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Login = () => {
+  const notify = () => toast("Wow so easy!");
   const schema = yup.object().shape({
     nic: yup.string().min(12,"Enter a valid NIC").max(12,"Enter a valid NIC").required("Enter a valid NIC"),
     password: yup.string().min(4).max(20).required("Enter the password"),

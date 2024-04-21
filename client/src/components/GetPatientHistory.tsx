@@ -30,6 +30,9 @@ function GetPatientHistory() {
                 setIsLoading(false);
             })
             .catch((err) => {
+                if(err.response.status === 401){
+                    window.location.href = "/login";
+                }
                 console.error(err);
                 _setIsLoading(false);
                 setInvalid(true);

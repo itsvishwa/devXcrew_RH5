@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 interface Prop {
   isLoading: boolean;
@@ -22,6 +23,41 @@ function DoctorForm({
   const [diagnosis, setDiagnosis] = useState("");
   const [medications, setMedications] = useState("");
   const [medicalTests, setMedicalTests] = useState("");
+  const [activeFrom, setActiveForm] = useState("");
+
+  const [files, setFiles] = useState<FileList | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = event.target.files;
+    setFiles(fileList);
+  };
+
+  const toggleForm = (form: string) => {
+    setActiveForm(form);
+  }
+
+  const handleSubmit = () => {
+    if (files) {
+      // Perform the submission logic here, using the selected files
+      // You can access the files using the `files` variable
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
+      // Perform the submission using the formData object
+      // You can use axios to send the data to the server
+      // For example:
+      axios.post("/api/submit", formData)
+        .then((response) => {
+          // Handle the response
+        })
+        .catch((error) => {
+          // Handle the error
+        });
+      // For example, you can create a FormData object and append the files to it
+    }
+  };
 
   return (
     <>
@@ -109,50 +145,84 @@ function DoctorForm({
           </div>
         )}
         {isVerified && (
-          <div>
+          <div className="mt-10">
+            <button
+              onClick={() => {
+                toggleForm("Form1");
+              }}
+              className="mr-10 btn btn-active btn-neutral"
+            >
+              Input data
+            </button>
+            <button
+              onClick={() => {
+                toggleForm("Form2");
+              }}
+              className="btn btn-active btn-neutral"
+            >
+              Input File
+            </button>
             <div className="divider"></div>
-            <span>Add symptoms *</span>
-            <textarea
-              placeholder="Additional symptoms"
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-              onChange={(event) => {
-                setSymptoms(event.target.value);
-              }}
-              value={symptoms}
-            ></textarea>
-            <span>Enter medical diagnosis *</span>
-            <textarea
-              placeholder="Diagnosis"
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-              onChange={(event) => {
-                setDiagnosis(event.target.value);
-              }}
-              value={diagnosis}
-            ></textarea>
-            <span>Enter Medications *</span>
-            <textarea
-              placeholder="Medications"
-              value={medications}
-              onChange={(event) => {
-                setMedications(event.target.value);
-              }}
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-            ></textarea>
-            <span>Enter Medical Tests</span>
-            <textarea
-              placeholder="Medical tests"
-              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
-              value={medicalTests}
-              onChange={(event) => {
-                setMedicalTests(event.target.value);
-              }}
-            ></textarea>
-            <div className="flex flex-row justify-between">
-              <button className="btn btn-outline btn-error">Discard</button>
-              <button className="btn btn-outline btn-success">
-                Submit Patient Data
-              </button>
-            </div>
+            {activeFrom === "Form1" && (
+              <>
+                <span>Add symptoms *</span>
+                <textarea
+                  placeholder="Additional symptoms"
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                  onChange={(event) => {
+                    setSymptoms(event.target.value);
+                  }}
+                  value={symptoms}
+                ></textarea>
+                <span>Enter medical diagnosis *</span>
+                <textarea
+                  placeholder="Diagnosis"
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                  onChange={(event) => {
+                    setDiagnosis(event.target.value);
+                  }}
+                  value={diagnosis}
+                ></textarea>
+                <span>Enter Medications *</span>
+                <textarea
+                  placeholder="Medications"
+                  value={medications}
+                  onChange={(event) => {
+                    setMedications(event.target.value);
+                  }}
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                ></textarea>
+                <span>Enter Medical Tests</span>
+                <textarea
+                  placeholder="Medical tests"
+                  className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
+                  value={medicalTests}
+                  onChange={(event) => {
+                    setMedicalTests(event.target.value);
+                  }}
+                ></textarea>
+                <div className="flex flex-row justify-between">
+                  <button className="btn btn-outline btn-error">Discard</button>
+                  <button className="btn btn-outline btn-success">
+                    Submit Patient Data
+                  </button>
+                </div>
+              </>
+            )}
+            {activeFrom === "Form2" && (
+              <>
+                <div>
+                  {/* ... */}
+                  <input type="file" multiple onChange={handleFileChange} />
+                  <div className="flex flex-row justify-between">
+                      <button className="mt-10 btn btn-outline btn-error">Discard</button>
+                      <button className="mt-10 btn btn-outline btn-success" onClick={handleSubmit}>
+                        Submit Patient Data
+                      </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
