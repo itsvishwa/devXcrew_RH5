@@ -9,21 +9,22 @@ function GetPatientHistory() {
     const [_isLoading, _setIsLoading] = useState(false);
     const [name, setName] = useState("");
     const [age, setAge] = useState("");
-    const [data, setdata] = useState([]);
+    const [data, setData] = useState([]);
 
     const patientVerifyBtnHandler = (nic: String) => {
         _setIsLoading(true);
         setIsLoading(true);
         apiClient
-            .get("/user/history/?nic=" + nic, {
+            .post("/diagnose/viewHistory/?nic="+nic,{},
+            {
                 headers: {
-                    Authorization: localStorage.getItem("token"),
-                }
-                })
+                    authorization: localStorage.getItem("token"),
+                },
+            })
             .then((res) => {
                 setName(res.data.name);
                 setAge(res.data.age);
-                setdata(res.data.data)
+                setData(res.data)
                 _setIsLoading(false);
                 setVerified(true);
                 setIsLoading(false);
