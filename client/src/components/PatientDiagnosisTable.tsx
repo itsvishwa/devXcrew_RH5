@@ -92,7 +92,7 @@ export const PatientDiagnosisTable = ({
               >
                 <path
                   fillRule="evenodd"
-                  d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                  d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307a4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397a4.49 4.49 0 0 1-3.498 1.306a4.491 4.491 0 0 1-1.307 3.498A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549a4.49 4.49 0 0 1-3.498-1.306a4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497a4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
                   clipRule="evenodd"
                 />
               </svg>
@@ -101,15 +101,14 @@ export const PatientDiagnosisTable = ({
               <div className="w-12 rounded-full bg-neutral text-neutral-content">
                 <span>V</span>
               </div>
-              <span className="ml-8">Name: {name}</span>
-              <span className="ml-8">Age: {age} years old</span>
+              <span className="ml-8">Name: {name || 'Lahiru'}</span>
+              <span className="ml-8">Age: {age|| '23'} years old</span>
             </div>
           </div>
         )}
-        {isVerified && (
+        {isVerified && data ? (
           <div className="overflow-x-auto">
             <table className="table table-zebra">
-              {/* head */}
               <thead>
                 <tr>
                   <th></th>
@@ -119,17 +118,20 @@ export const PatientDiagnosisTable = ({
                 </tr>
               </thead>
               <tbody>
-                {data.map((diagnose, index) => (
-                  <tr key={index}>
-                    <th>{index}</th>
-                    <td>{diagnose.data}</td>
-                    <td>{diagnose.Doctor}</td>
-                    <td>{diagnose.Diagnosis}</td>
+                {data.map((diagnose, key) => (
+                  <tr key={key}>
+                    <td>{key}</td>
+                    <td>{new Date(diagnose.input_date).toLocaleDateString()}</td>
+                    <td>{diagnose.doctor.name}</td>
+                    <td>{diagnose.diagnosis}</td>
                   </tr>
                 ))}
-
               </tbody>
             </table>
+          </div>
+        ) : (
+          <div className="flex justify-center mt-4">
+            <img src="path/to/picture" alt="No data available" />
           </div>
         )}
       </div>

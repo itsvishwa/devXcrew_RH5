@@ -25,9 +25,9 @@ function DoctorForm({
 
   return (
     <>
-      <div className="p-8 bg-base-300 rounded-md shadow-lg">
+      <div className="p-8 rounded-md shadow-lg bg-base-300">
         {/* Patient ID  */}
-        <label className="input input-bordered flex items-center gap-2">
+        <label className="flex items-center gap-2 input input-bordered">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -60,13 +60,13 @@ function DoctorForm({
           </button>
         </label>
         {isLoading && (
-          <div className="flex mt-2 justify-end ">
+          <div className="flex justify-end mt-2 ">
             <span className="mr-2">Loading</span>
             <span className="loading loading-ring loading-md"></span>
           </div>
         )}
         {isInvalid && (
-          <div className="flex mt-2 justify-end">
+          <div className="flex justify-end mt-2">
             <span className="mr-2 text-error">Invalid Patient NIC</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ function DoctorForm({
         )}
         {isVerified && (
           <div>
-            <div className="flex mt-2 justify-end ">
+            <div className="flex justify-end mt-2 ">
               <span className="mr-2 text-success">Verified</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -99,8 +99,8 @@ function DoctorForm({
                 />
               </svg>
             </div>
-            <div className="avatar placeholder flex items-center bg-base-200 p-4 rounded-lg mt-4">
-              <div className="bg-neutral text-neutral-content rounded-full w-12">
+            <div className="flex items-center p-4 mt-4 rounded-lg avatar placeholder bg-base-200">
+              <div className="w-12 rounded-full bg-neutral text-neutral-content">
                 <span>V</span>
               </div>
               <span className="ml-8">Name: {name}</span>
@@ -114,7 +114,7 @@ function DoctorForm({
             <span>Add symptoms *</span>
             <textarea
               placeholder="Additional symptoms"
-              className="mt-4 mb-8 textarea textarea-bordered textarea-lg w-full"
+              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
               onChange={(event) => {
                 setSymptoms(event.target.value);
               }}
@@ -123,7 +123,7 @@ function DoctorForm({
             <span>Enter medical diagnosis *</span>
             <textarea
               placeholder="Diagnosis"
-              className="mt-4 mb-8 textarea textarea-bordered textarea-lg w-full"
+              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
               onChange={(event) => {
                 setDiagnosis(event.target.value);
               }}
@@ -136,12 +136,12 @@ function DoctorForm({
               onChange={(event) => {
                 setMedications(event.target.value);
               }}
-              className="mt-4 mb-8  textarea textarea-bordered textarea-lg w-full"
+              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
             ></textarea>
             <span>Enter Medical Tests</span>
             <textarea
               placeholder="Medical tests"
-              className="mt-4 mb-8  textarea textarea-bordered textarea-lg w-full"
+              className="w-full mt-4 mb-8 textarea textarea-bordered textarea-lg"
               value={medicalTests}
               onChange={(event) => {
                 setMedicalTests(event.target.value);
