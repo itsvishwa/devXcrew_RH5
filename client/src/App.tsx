@@ -7,6 +7,7 @@ import Chat from "./components/Chat";
 import GetPatientHistory from "./components/GetPatientHistory";
 import { Navbar } from "./components/Navbar";
 import Home from "./components/Home";
+import Chart from "./components/Chart"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/diagnose/add" element={<AddDiagnose />} />
           <Route path="/PatientHistory" element={<GetPatientHistory />} />
           <Route path="/" element={<Home />} />
+          <Route path="/chart" element={<Chart />} />
         </Routes>
       </Router>
     </div>
